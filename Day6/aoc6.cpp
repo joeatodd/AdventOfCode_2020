@@ -66,27 +66,22 @@ int main()
 	people_groups.push_back(curr_group);
 
 	int part2_sum = 0;
-	groupq_t curr_set, set2;
-	vector<char> curr_vec;
+	groupq_t group_intersect, curr_intersect, set2;
 	for(vector<groupq_t> curr_group : people_groups){
-		curr_set = curr_group.at(0);
-		for(int i=1; i < curr_group.size(); i++){
+		curr_intersect = curr_group.at(0);
+		for(unsigned int i=1; i < curr_group.size(); i++){
 			set2 = curr_group.at(i);
 
-			set_intersection(curr_set.begin(), curr_set.end(),
-					 set2.begin(), set2.end(), back_inserter(curr_vec));
+			set_intersection(curr_intersect.begin(), curr_intersect.end(),
+					 set2.begin(), set2.end(),
+					 std::inserter(group_intersect,
+						       group_intersect.begin()));
 
-			curr_set.clear();
-
-			for(int j=0; j<curr_vec.size(); j++){
-				curr_set.insert(curr_vec.at(j));
-			}
-			curr_vec.clear();
-
+			curr_intersect = group_intersect;
+			group_intersect.clear();
 		}
-		part2_sum += curr_set.size();
+		part2_sum += curr_intersect.size();
 
-		curr_set.clear();
 	}
 
 	cout << "Part 2 ans: " << part2_sum << endl;
