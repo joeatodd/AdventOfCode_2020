@@ -1,2 +1,2 @@
-aoc8: aoc8.cpp
-	g++ -o aoc8 -g aoc8.cpp
+aoc8: aoc8.cpp assembly.cpp
+	g++ -o aoc8 -g assembly.cpp aoc8.cpp
