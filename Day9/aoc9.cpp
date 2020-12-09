@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -20,11 +21,14 @@ int main()
 		numbers.push_back(stol(line));
 	}
 
+	// Seek the weak number
 	for(unsigned int idx = pre_len; idx < numbers.size(); idx++){
+
+		// Get the pre-amble for this number (candidates) in a
+		// multiset (ordered list, faster lookup)
 		first = idx - pre_len;
 		last = idx;
 		target = numbers[idx];
-
 		std::multiset<int> candidates (numbers.begin() + first,
 					       numbers.begin() + last);
 
@@ -60,32 +64,32 @@ int main()
 
 	/* Part 2 - find a contiguous range of numbers before weakno which
 	   is equal to weakno.
-
-	   Is it more efficient to work down the list, or up it? Not sure...
 	*/
 
-	for(int i = 0; i < weakidx; i++){
-		int sum = numbers[i];
-		int j = i;
+	int i = 0, j = 1;
+	int sum = 0;
+	sum = numbers[i];
+	while(sum != weakno){
 
-		while(sum < weakno)
-		{
-			j++;
+		while(sum < weakno){
 			sum += numbers[j];
+			j++;
 		}
 
-		if(sum == weakno){
-			auto max_it = std::max_element(numbers.begin()+i,
-						       numbers.begin()+j);
-
-			auto min_it = std::min_element(numbers.begin()+i,
-						       numbers.begin()+j);
-
-			std::cout << "Part 2 ans: " << *min_it + *max_it << std::endl;
-			break;
+		if(sum > weakno){
+			sum -= numbers[i];
+			i++;
 		}
 
 	}
+
+	auto max_it = std::max_element(numbers.begin()+i,
+				       numbers.begin()+j);
+
+	auto min_it = std::min_element(numbers.begin()+i,
+				       numbers.begin()+j);
+
+	std::cout << "Part 2 ans: " << *min_it + *max_it << std::endl;
 
 	return 0;
 }
