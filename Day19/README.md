@@ -25,3 +25,9 @@ In the first case, rule 8 will match any length combination of ```42``` (actuall
 In the second case, rule 11 will match any nested combination of ```42 31```, ```42 42 31 31```, ```42 42 42 31 31 31```...
 
 At the moment I'm not totally sure how to deal with this. I am committing my code for part 1 so I can safely mess with it.
+
+
+Match is:  42, 42 + , 31 +
+At least two x 42, and at least one more 42 than there are 31s
+
+So, a queue system where we chomp off 42s, then 31s?
